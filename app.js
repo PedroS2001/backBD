@@ -25,7 +25,7 @@ const app = express();
 // Middleware for logged requests in console
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true })) 
 app.use(cors(corsOptions));
 
 // Routes

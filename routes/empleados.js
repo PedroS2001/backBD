@@ -90,7 +90,7 @@ router.get('/tecnicoscerca', (req, res) => {
                 $near:
                 {
                     $geometry: ticketDevolucion.cliente.ubicacion,
-                    $maxDistance: 20000
+                    $maxDistance: 2000
                 }
             }
         })
@@ -99,7 +99,31 @@ router.get('/tecnicoscerca', (req, res) => {
             })
     })
 
+});
 
+
+router.get('/yclientes', (req, res) => {
+    db.getInstance().collection('clientes').aggregate([
+        {
+            $lookup:
+            {
+                from: "empleados",
+                localField: "dni",
+                foreignField: "dni",
+                as: "conecta"
+            }
+        },
+        {
+            $project: {
+                "nombre": 1,
+                "apellido": 1,
+                "conecta": 1,
+                "_id": 0
+            }
+        }])
+        .toArray().then(data => {
+            res.send(data);
+        })
 });
 
 

@@ -118,7 +118,7 @@ router.get('/desperfecto', (req, res) => {
             db.getInstance().collection('tickets').find({
                 $and: [
                     { "resuelto": false },
-                    { "motivo": "Desperfecto" },
+                    { "motivo": "desperfecto" },
                     {
                         $or: [
                             {
@@ -138,6 +138,11 @@ router.get('/desperfecto', (req, res) => {
                         ]
                     }
                 ]
+            },
+            {
+                fields:{
+                    "cliente.localidad.posicion":0
+                }
             }).toArray().then((data) => {
                 res.send(data);
             })
